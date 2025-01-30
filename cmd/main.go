@@ -7,13 +7,13 @@ import (
 )
 
 func main() {
-	// Initialize application
+	/* Initialize application by gin */
 	app, err := bootstrap.InitializeApp()
 	if err != nil {
 		log.Fatalf("failed to initialize application: %v", err)
 	}
 
-	error := app.Listen(":3001")
+	error := app.Run(":3100")
 	if error != nil {
 		log.Fatalf("Error starting server: %v", error)
 	}

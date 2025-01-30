@@ -1,7 +1,7 @@
 package bootstrap
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 	"github.com/kittiphop/e-commerce/infrastructures"
 	"github.com/kittiphop/e-commerce/infrastructures/db/gorm"
 	"github.com/kittiphop/e-commerce/internal/adapters/inbound/http"
@@ -10,7 +10,7 @@ import (
 	"github.com/kittiphop/e-commerce/internal/routers"
 )
 
-func InitializeApp() (*fiber.App, error) {
+func InitializeApp() (*gin.Engine, error) {
 	// Setup Database
 	db := infrastructures.NewDatabase()
 	infrastructures.AutoMigrate(db)
@@ -22,7 +22,7 @@ func InitializeApp() (*fiber.App, error) {
 	productHandler := http.NewProductHandler(*productService)
 
 	// Setup Fiber Router
-	app := fiber.New()
+	app := gin.New()
 	routers.ProductSetupRouter(app, productHandler)
 
 	return app, nil

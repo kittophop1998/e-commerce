@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 	"github.com/kittiphop/e-commerce/internal/application/services"
 	"github.com/kittiphop/e-commerce/internal/domain/entities"
 )
@@ -16,16 +16,20 @@ func NewProductHandler(productService services.ProductService) *ProductHandler {
 	}
 }
 
-func (p *ProductHandler) GetAll(c *fiber.Ctx) error {
+func (p *ProductHandler) GetAll(c *gin.Context) {
 	result := p.ProductService.GetAllProduct()
 
-	return c.JSON(result)
+	c.JSON(200, gin.H{"data": result})
 }
 
-func (p *ProductHandler) AddStock(c *fiber.Ctx) error {
+func (p *ProductHandler) AddStock(c *gin.Context) {
 	product := new(entities.Product)
-	c.BodyParser(product)
+	if err := c.ShouldBindJSON(product); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
 	result := p.ProductService.AddStock(product)
 
-	return c.JSON(result)
+	c.JSON(200, gin.H{"data": result})
 }

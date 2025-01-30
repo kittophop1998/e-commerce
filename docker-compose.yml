@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres
+    container_name: db
     ports:
       - "5432:5432"
     environment:
@@ -14,7 +14,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: pgadmin
+    container_name: pgadmin-db
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
